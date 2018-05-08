@@ -272,7 +272,7 @@ export default class Game extends React.Component {
 	
 	reset = () => {
 		this.gameStarted = false;
-		this.gameover = false;
+		this.gameOver = false;
 		this.setState({ score: 0});
 		this.player.reset(this.scene.size.width * -0.3, 0);
 		this.player.angle = 0;
@@ -281,14 +281,17 @@ export default class Game extends React.Component {
 	
 	velocity = 0;
 	tap = () => {
+		//console.log("Game Start: " + this.gameStarted + " Game Over: " + this.gameOver);
 		if(!this.gameStarted){
+			//console.log("Game Start");
 			this.gameStarted = true;
 			this.pillarInterval = setInterval(this.spawnPipes, SPAWN_RATE);
-		}
-		
-		if(!this.gameOver){
+			this.velocity = FLAP;
+		} else if(!this.gameOver){
+			//console.log("Flap");
 			this.velocity = FLAP;
 		} else {
+			//console.log("Game Reset");
 			this.reset();
 		}
 		
@@ -309,7 +312,6 @@ export default class Game extends React.Component {
 		{this.state.score}
 		</Text>
 	);
-	
 	
   render() {
     //@(Evan Bacon) This is a dope SpriteView based on SpriteKit that surfaces touches, render, and setup!
